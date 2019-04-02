@@ -1,0 +1,60 @@
+1a. We use the LSDIAGtest.f90 file in order to test the different solvers via the interface in the main program which calls the subroutine containing the solver.
+When testing the non symmetric case we change the selected case in the main program by setting sw(0) and selecting the case relating to the nonsymmetric matrix A.
+When we test BiCGSTAB (compile using gfortran -fdefault-real-8) with the nonsymmetric case sw(0) the solution converges in 7 iterations to a solution of b=1 with err1=0.7980141E-11 and err2=0.8529544E-11 at the last iteration.
+done: it/err1/err2/stopcrit     7  0.7980141E-11  0.8529544E-11    -10
+    max defect, max residual:  0.1210704E-07  0.7552424E-07
+         CPU time in seconds:  0.2158000E+01
+
+When testing the nonsymmetric case BiCGSTAB converges in 17 iterations with b=1 and
+done: it/err1/err2/stopcrit    17  0.1103283E-10  0.3180985E-11    -10
+    max defect, max residual:  0.3027179E-07  0.2465341E-06
+         CPU time in seconds:  0.4820000E+01
+
+Error tolerances used were with the norm of xi+1-xi relative to the tol(normx) and the norm of r compared to tol(normA*normx+normb). We also check norm of s in the program which will exit if the norm of s is to large. this is determined by comparing norm of s to tolerance 1 which was set to 1e-12.
+
+1c/d. Graphs plotted using xmgrace and attached to the assignment.
+	
+-I compile all solvers with the testbed using the flag -fdefault-real-8
+
+For the CG method we have convergence to max=1 min=0.4704850 after 22 iterations. Note:
+    22 0.5118177E-10  0.3043623E-10  0.1000000E+01  0.4704850E+00
+ done: it/err1/err2/stopcrit    22  0.5118177E-10  0.3043623E-10    -10
+    max defect, max residual:  0.5295150E+00  0.7455851E-06
+         CPU time in seconds:  0.4190000E+00
+
+BiCGSTAB
+    14 0.5409805E-10  0.7226947E-10  0.1000000E+01  0.4704850E+00
+   done: it/err1/err2/stopcrit    14  0.5409805E-10  0.7226947E-10    -10
+    max defect, max residual:  0.5295150E+00  0.1895687E-06
+         CPU time in seconds:  0.4830000E+00
+
+Gauss-Seidel
+ 56 0.1000000E+01  0.1684835E-12  0.1000000E+01  0.4704850E+00
+   done: it/err1/err2/stopcrit    56  0.1000000E+01  0.1684835E-12   -100
+    max defect, max residual:  0.5295150E+00  0.1376874E-09
+         CPU time in seconds:  0.1180000E+01
+
+Jacobi
+ 78 0.8485375E-10  0.1697075E-10  0.1000000E+01  0.4704850E+00
+   done: it/err1/err2/stopcrit    78  0.8485375E-10  0.1697075E-10    -10
+    max defect, max residual:  0.5295150E+00  0.2760699E-07
+         CPU time in seconds:  0.1175000E+01
+
+We notice CG converged slightly more quickly than BiCGSTAB and the other solvers, but took 8 more iterations than BiCGSTAB. Gauss Seidel and Jacobi were comparable in CPU time, Jacobi took 22 more iterations than GS. BiCGSTAB and CG are superior to GS and Jacobi for this given case.
+
+
+1e.
+We altered the main program LSDIAGtest.f90 such that our matrix was now non symmetric and changing b such that rhs=1. We solve using BiCGSTAB and the Conjugate Gradient Method and compare the results. Graphs were plotted using xmgrace and compiliation used the -fdefault-real-8 flag.
+
+CG
+ 41 0.9633863E-10  0.8258569E-11 -0.4165016E+00 -0.1000000E+01
+   done: it/err1/err2/stopcrit    41  0.9633863E-10  0.8258569E-11    -10
+    max defect, max residual:  0.2000000E+01  0.4474748E-05
+         CPU time in seconds:  0.7410000E+00
+
+BiCGSTAB
+ 15 0.9854143E-10  0.1205092E-09 -0.4165016E+00 -0.1000000E+01
+   done: it/err1/err2/stopcrit    15  0.9854143E-10  0.1205092E-09    -10
+    max defect, max residual:  0.2000000E+01  0.5146367E-06
+         CPU time in seconds:  0.4740000E+00
+BiCGSTAB converges more quickly and in fewer iterations. 

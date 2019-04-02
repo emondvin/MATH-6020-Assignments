@@ -1,0 +1,8 @@
+Original assignment handed out had errors.
+These are the changes, and should be represented in the assignment pdf.
+But in case they are not, it should read as follows:
+
+A2.1b:  Show that -A is symmetric positive definite
+
+
+A2.4:  There is a typo in the definition of \tilde L.  Correct is what  was introduced in class, i.e.  correct is $\tilde L =  D^{-1/2} L  D^{-1/2}$
